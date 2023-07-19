@@ -1,4 +1,4 @@
-package com.crud.spring;
+package com.crud.spring.controller;
 
 import com.crud.spring.exception.RecordNotFoundException;
 import org.springframework.http.HttpStatus;
