@@ -1,5 +1,6 @@
 package com.crud.spring.service;
 
+import com.crud.spring.exception.RecordNotFoundException;
 import com.crud.spring.model.Course;
 import com.crud.spring.repository.CourseRepository;
 import jakarta.validation.Valid;
@@ -25,29 +26,26 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public Optional<Course> findById(@Positive @NotNull Long id) {
-        return courseRepository.findById(id);
+    public Course findById(@Positive @NotNull Long id) {
+        return courseRepository.findById(id).orElseThrow(
+                () -> new RecordNotFoundException(id)
+        );
     }
 
     public Course create(@Valid Course course) {
         return courseRepository.save(course);
     }
 
-    public Optional<Course> update(@Positive @NotNull Long id, @Valid Course course) {
+    public Course update(@Positive @NotNull Long id, @Valid Course course) {
         return courseRepository.findById(id)
                 .map(courseFound -> {
                     courseFound.setName(course.getName());
                     courseFound.setCategory(course.getCategory());
                     return courseRepository.save(courseFound);
-                });
+                }).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
-
-    public boolean delete(@Positive @NotNull Long id) {
-        return courseRepository.findById(id)
-                .map(courseFounded -> {
-                    courseRepository.deleteById(id);
-                    return true;
-                }).orElse(false);
+    public void delete(@Positive @NotNull Long id) {
+        courseRepository.delete(courseRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id)));
     }
 }
