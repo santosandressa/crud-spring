@@ -1,5 +1,6 @@
 package com.crud.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,8 +18,9 @@ public class Lesson {
     @Column(nullable = false)
     private String urlVideo;
 
-    @ManyToOne(fetch =  FetchType.LAZY)
+    @ManyToOne(fetch =  FetchType.LAZY, optional = false)
     @JoinColumn(name = "course_id", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Course course;
 
 }
