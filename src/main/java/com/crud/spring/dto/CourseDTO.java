@@ -1,6 +1,5 @@
 package com.crud.spring.dto;
 
-import com.crud.spring.model.Lesson;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +16,7 @@ public record CourseDTO(
         @NotNull
         @Length(max = 10, message = "The code must be a maximum of 10 characters")
         @Pattern(regexp = "back-end|front-end|mobile|dev-ops") String category ,
-        List<Lesson> lessons){
+        List<LessonDTO> lessons){
 
 
 }
