@@ -1,6 +1,7 @@
 package com.crud.spring.dto.mapper;
 
 import com.crud.spring.dto.CourseDTO;
+import com.crud.spring.enums.Category;
 import com.crud.spring.model.Course;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ public class CourseMapper {
         if (course == null) {
             return null;
         }
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory());
+        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue());
     }
 
     public Course toEntity(CourseDTO courseDTO) {
@@ -23,9 +24,22 @@ public class CourseMapper {
             course.setId(courseDTO.id());
         }
         course.setName(courseDTO.name());
-        course.setCategory(courseDTO.category());
-        course.setStatus("Ativo");
+        course.setCategory(convertCategoryValue(courseDTO.category()));
         return course;
+    }
+
+    public Category convertCategoryValue(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        return switch (value) {
+            case "front-end" -> Category.FRONTEND;
+            case "back-end" -> Category.BACKEND;
+            case "mobile" -> Category.MOBILE;
+            case "dev-ops" -> Category.DEVOPS;
+            default -> throw new IllegalArgumentException("Invalid category value: " + value);
+        };
     }
 
 }

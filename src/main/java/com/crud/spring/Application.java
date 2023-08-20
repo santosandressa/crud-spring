@@ -1,5 +1,6 @@
 package com.crud.spring;
 
+import com.crud.spring.enums.Category;
 import com.crud.spring.model.Course;
 import com.crud.spring.repository.CourseRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -20,7 +21,7 @@ public class Application {
 			courseRepository.deleteAll();
 			Course course = new Course();
 			course.setName("Angular");
-			course.setCategory("front-end");
+			course.setCategory(Category.FRONTEND);
 
 			courseRepository.save(course);
 		};
