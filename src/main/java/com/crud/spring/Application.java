@@ -28,8 +28,13 @@ public class Application {
 			lesson.setName("Introdução ao Angular");
 			lesson.setUrlVideo("https://youtu.be/tPOMG0D57S0");
 			lesson.setCourse(course);
-
 			course.getLessons().add(lesson);
+
+			Lesson lesson2 = new Lesson();
+			lesson2.setName("Ambiente de Desenvolvimento");
+			lesson2.setUrlVideo("https://youtu.be/XxPjcMTZz5w");
+			lesson2.setCourse(course);
+			course.getLessons().add(lesson2);
 
 			courseRepository.save(course);
 		};
