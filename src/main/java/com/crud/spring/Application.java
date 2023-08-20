@@ -1,6 +1,8 @@
 package com.crud.spring;
 
+import com.crud.spring.enums.Category;
 import com.crud.spring.model.Course;
+import com.crud.spring.model.Lesson;
 import com.crud.spring.repository.CourseRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +22,19 @@ public class Application {
 			courseRepository.deleteAll();
 			Course course = new Course();
 			course.setName("Angular");
-			course.setCategory("front-end");
+			course.setCategory(Category.FRONTEND);
+
+			Lesson lesson = new Lesson();
+			lesson.setName("Introdução ao Angular");
+			lesson.setUrlVideo("https://youtu.be/tPOMG0D57S0");
+			lesson.setCourse(course);
+			course.getLessons().add(lesson);
+
+			Lesson lesson2 = new Lesson();
+			lesson2.setName("Ambiente de Desenvolvimento");
+			lesson2.setUrlVideo("https://youtu.be/XxPjcMTZz5w");
+			lesson2.setCourse(course);
+			course.getLessons().add(lesson2);
 
 			courseRepository.save(course);
 		};

@@ -1,14 +1,20 @@
 package com.crud.spring.model;
 
+import com.crud.spring.enums.Category;
+import com.crud.spring.enums.Status;
+import com.crud.spring.enums.converter.CategoryConverter;
+import com.crud.spring.enums.converter.StatusConverter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -28,15 +34,15 @@ public class Course {
     private String name;
 
     @NotNull
-    @Length(max = 10, message = "The code must be a maximum of 10 characters")
-    @Pattern(regexp = "back-end|front-end|mobile|dev-ops")
     @Column(length = 15, nullable = false)
-    private String category;
+    @Convert(converter = CategoryConverter.class)
+    private Category category;
 
     @NotNull
-    @Length(max = 10, message = "The code must be a maximum of 10 characters")
-    @Pattern(regexp = "Ativo|Inativo")
     @Column(length = 10, nullable = false)
-    private String status = "Ativo";
+    @Convert(converter = StatusConverter.class)
+    private Status status = Status.ACTIVE;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
+    private List<Lesson> lessons = new ArrayList<>();
 }
