@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping("/api/v1/courses")
 public class CourseController {
 
-
     private final CourseService courseService;
 
     public CourseController(CourseService courseService) {
@@ -26,7 +25,7 @@ public class CourseController {
     }
 
     @GetMapping
-    public @ResponseBody List<CourseDTO> list() {
+    public List<CourseDTO> list() {
         return courseService.list();
     }
 
